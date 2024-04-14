@@ -170,13 +170,13 @@ class Fundify_Admin_Settings
 	 */
 	function fundify_options_page()
 	{
-		add_menu_page(
-			'Fundify',
-			'Fundify Options',
-			'manage_options',
-			'fundify',
-			array($this, 'fundify_options_page_html')
-		);
+
+
+		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
+		add_menu_page($this->fundify, 'Fundify', 'manage_options', $this->fundify, array($this, 'fundify_options_page_html'), 'dashicons-chart-area', 26);
+
+		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
+		add_submenu_page($this->fundify, 'Fundify Settings', 'Settings', 'manage_options', $this->fundify . '-settings', array($this, 'fundify_admin_tabs'));
 	}
 
 
@@ -223,5 +223,10 @@ class Fundify_Admin_Settings
 			</form>
 		</div>
 <?php
+	}
+
+	public function fundify_admin_tabs()
+	{
+		require_once 'partials/' . $this->fundify . '-admin-tabs.php';
 	}
 }

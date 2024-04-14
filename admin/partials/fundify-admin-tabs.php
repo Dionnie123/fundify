@@ -1,5 +1,11 @@
 <!-- Our admin page content should all be inside .wrap -->
 <?php
+
+// check user capabilities
+if (!current_user_can('manage_options')) {
+    return;
+}
+
 //Get the active tab from the $_GET param
 $default_tab = null;
 $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
@@ -12,9 +18,9 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
     <h1> Fundify </h1>
     <!-- Here are our tabs -->
     <nav class="nav-tab-wrapper">
-        <a href="?page=fundify" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">General</a>
-        <a href="?page=fundify&tab=settings" class="nav-tab <?php if ($tab === 'settings') : ?>nav-tab-active<?php endif; ?>">Settings</a>
-        <a href="?page=fundify&tab=tools" class="nav-tab <?php if ($tab === 'tools') : ?>nav-tab-active<?php endif; ?>">Tools</a>
+        <a href="?page=fundify-settings" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">General</a>
+        <a href="?page=fundify-settings&tab=settings" class="nav-tab <?php if ($tab === 'settings') : ?>nav-tab-active<?php endif; ?>">Settings</a>
+        <a href="?page=fundify-settings&tab=tools" class="nav-tab <?php if ($tab === 'tools') : ?>nav-tab-active<?php endif; ?>">Tools</a>
     </nav>
 
     <div class="tab-content wrap">
