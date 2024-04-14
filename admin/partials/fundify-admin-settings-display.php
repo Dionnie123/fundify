@@ -5,7 +5,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       plugin_name.com/team
+ * @link       fundify.com/team
  * @since      1.0.0
  *
  * @package    PluginName
@@ -20,8 +20,8 @@
     <?php settings_errors(); ?>
     <form method="POST" action="options.php">
         <?php
-        settings_fields('plugin_name_general_settings');
-        do_settings_sections('plugin_name_general_settings');
+        settings_fields('fundify_general_settings');
+        do_settings_sections('fundify_general_settings');
         ?>
         <?php submit_button(); ?>
     </form>

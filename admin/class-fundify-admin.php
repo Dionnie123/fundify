@@ -28,9 +28,9 @@ class Fundify_Admin
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string    $fundify    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private $fundify;
 
 	/**
 	 * The version of this plugin.
@@ -45,13 +45,13 @@ class Fundify_Admin
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
+	 * @param      string    $fundify       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct($plugin_name, $version)
+	public function __construct($fundify, $version)
 	{
 
-		$this->plugin_name = $plugin_name;
+		$this->fundify = $fundify;
 		$this->version = $version;
 	}
 
@@ -81,8 +81,8 @@ class Fundify_Admin
 
 
 
-		wp_enqueue_style($this->plugin_name . '-admin',  plugin_dir_url(__DIR__) . 'admin/css/fundify-admin.css', array(), $ver, 'all', 2);
-		wp_enqueue_style($this->plugin_name . '-adminx',  plugin_dir_url(__DIR__) . 'dist/assets/css/admin.css ', array(), $ver, 'all', 2);
+		wp_enqueue_style($this->fundify . '-admin',  plugin_dir_url(__DIR__) . 'admin/css/fundify-admin.css', array(), $ver, 'all', 2);
+		wp_enqueue_style($this->fundify . '-adminx',  plugin_dir_url(__DIR__) . 'dist/assets/css/admin.css ', array(), $ver, 'all', 2);
 
 		wp_enqueue_style('bsx3xx', 'https://raw.githubusercontent.com/elad2412/the-new-css-reset/main/css/reset.css', array(), $ver, 'all');
 		wp_enqueue_style('bsx3x', 'https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css', array(), $ver, 'all');
@@ -111,7 +111,7 @@ class Fundify_Admin
 		 * class.
 		 */
 
-		wp_enqueue_script($this->plugin_name . 'fdf', plugin_dir_url(__FILE__) . 'js/fundify-admin.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->fundify . 'fdf', plugin_dir_url(__FILE__) . 'js/fundify-admin.js', array('jquery'), $this->version, false);
 
 		wp_enqueue_script('bsx3x', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', array('jquery'), $this->version, true);
 	}
@@ -124,10 +124,10 @@ class Fundify_Admin
 	public function add_plugin_admin_menu()
 	{
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-		add_menu_page($this->plugin_name, 'Fundify', 'administrator', $this->plugin_name, array($this, 'display_plugin_admin_dashboard'), 'dashicons-chart-area', 26);
+		add_menu_page($this->fundify, 'Fundify', 'administrator', $this->fundify, array($this, 'display_plugin_admin_dashboard'), 'dashicons-chart-area', 26);
 
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
-		add_submenu_page($this->plugin_name, 'Fundify Settings', 'Settings', 'administrator', $this->plugin_name . '-settings', array($this, 'display_plugin_admin_settings'));
+		add_submenu_page($this->fundify, 'Fundify Settings', 'Settings', 'administrator', $this->fundify . '-settings', array($this, 'display_plugin_admin_settings'));
 	}
 
 
@@ -143,7 +143,7 @@ class Fundify_Admin
 		}
 
 
-		require_once 'partials/' . $this->plugin_name . '-admin-tabs.php';
+		require_once 'partials/' . $this->fundify . '-admin-tabs.php';
 
 ?>
 
@@ -155,19 +155,19 @@ class Fundify_Admin
 		// set this var to be used in the settings-display view
 		$active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
 		if (isset($_GET['error_message'])) {
-			add_action('admin_notices', array($this, 'plugin_name_settings_messages'));
+			add_action('admin_notices', array($this, 'fundify_settings_messages'));
 			do_action('admin_notices', $_GET['error_message']);
 		}
-		require_once 'partials/' . $this->plugin_name . '-admin-settings-display.php';
+		require_once 'partials/' . $this->fundify . '-admin-settings-display.php';
 	}
 
-	public function plugin_name_settings_messages($error_message)
+	public function fundify_settings_messages($error_message)
 	{
 		switch ($error_message) {
 			case '1':
 				$message = __('There was an error adding this setting. Please try again.  If this persists, shoot us an email.', 'my-text-domain');
-				$err_code = esc_attr('plugin_name_example_setting');
-				$setting_field = 'plugin_name_example_setting';
+				$err_code = esc_attr('fundify_example_setting');
+				$setting_field = 'fundify_example_setting';
 				break;
 		}
 		$type = 'error';
@@ -188,52 +188,52 @@ class Fundify_Admin
 		 */
 		add_settings_section(
 			// ID used to identify this section and with which to register options
-			'plugin_name_general_section',
+			'fundify_general_section',
 			// Title to be displayed on the administration page
 			'',
 			// Callback used to render the description of the section
-			array($this, 'plugin_name_display_general_account'),
+			array($this, 'fundify_display_general_account'),
 			// Page on which to add this section of options
-			'plugin_name_general_settings'
+			'fundify_general_settings'
 		);
 		unset($args);
 		$args = array(
 			'type'      => 'input',
 			'subtype'   => 'text',
-			'id'    => 'plugin_name_example_setting',
-			'name'      => 'plugin_name_example_setting',
+			'id'    => 'fundify_example_setting',
+			'name'      => 'fundify_example_setting',
 			'required' => 'true',
 			'get_options_list' => '',
 			'value_type' => 'normal',
 			'wp_data' => 'option'
 		);
 		add_settings_field(
-			'plugin_name_example_setting',
+			'fundify_example_setting',
 			'Example Setting',
-			array($this, 'plugin_name_render_settings_field'),
-			'plugin_name_general_settings',
-			'plugin_name_general_section',
+			array($this, 'fundify_render_settings_field'),
+			'fundify_general_settings',
+			'fundify_general_section',
 			$args
 		);
 
 
 		register_setting(
-			'plugin_name_general_settings',
-			'plugin_name_example_setting'
+			'fundify_general_settings',
+			'fundify_example_setting'
 		);
 	}
 
-	public function plugin_name_display_general_account()
+	public function fundify_display_general_account()
 	{
 		echo '<p>These settings apply to all Plugin Name functionality.</p>';
 	}
 
-	public function plugin_name_render_settings_field($args)
+	public function fundify_render_settings_field($args)
 	{ /* EXAMPLE INPUT
         'type'      => 'input',
         'subtype'   => '',
-        'id'    => $this->plugin_name.'_example_setting',
-        'name'      => $this->plugin_name.'_example_setting',
+        'id'    => $this->fundify.'_example_setting',
+        'name'      => $this->fundify.'_example_setting',
         'required' => 'required="required"',
         'get_option_list' => "",
           'value_type' = serialized OR normal,
@@ -263,7 +263,7 @@ class Fundify_Admin
 					} else {
 						echo $prependStart . '<input type="' . $args['subtype'] . '" id="' . $args['id'] . '" "' . $args['required'] . '" ' . $step . ' ' . $max . ' ' . $min . ' name="' . $args['name'] . '" size="40" value="' . esc_attr($value) . '" />' . $prependEnd;
 					}
-					/*<input required="required" '.$disabled.' type="number" step="any" id="'.$this->plugin_name.'_cost2" name="'.$this->plugin_name.'_cost2" value="' . esc_attr( $cost ) . '" size="25" /><input type="hidden" id="'.$this->plugin_name.'_cost" step="any" name="'.$this->plugin_name.'_cost" value="' . esc_attr( $cost ) . '" />*/
+					/*<input required="required" '.$disabled.' type="number" step="any" id="'.$this->fundify.'_cost2" name="'.$this->fundify.'_cost2" value="' . esc_attr( $cost ) . '" size="25" /><input type="hidden" id="'.$this->fundify.'_cost" step="any" name="'.$this->fundify.'_cost" value="' . esc_attr( $cost ) . '" />*/
 				} else {
 					$checked = ($value) ? 'checked' : '';
 					echo '<input type="' . $args['subtype'] . '" id="' . $args['id'] . '" "' . $args['required'] . '" name="' . $args['name'] . '" size="40" value="1" ' . $checked . ' />';
