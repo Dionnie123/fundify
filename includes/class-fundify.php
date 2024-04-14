@@ -168,7 +168,7 @@ class Fundify
 
 
 		$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_settings_init');
-		$this->loader->add_action('admin_menu', $plugin_admin_settings, 'fundify_options_page');
+		$this->loader->add_action('admin_menu', $plugin_admin_settings, 'fundify_main_page');
 		//$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_options_page_html');
 	}
 

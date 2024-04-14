@@ -83,7 +83,7 @@ class Fundify_Admin_Settings
 	function fundify_settings_init()
 	{
 		// Register a new setting for "fundify" page.
-		register_setting('fundify', 'fundify_options');
+		register_setting('fundify', $this->options_key);
 
 		// Register a new section in the "fundify" page.
 		add_settings_section(
@@ -129,8 +129,8 @@ class Fundify_Admin_Settings
 	function fundify_section_developers_callback($args)
 	{
 ?>
-		<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
-	<?php
+<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
+<?php
 	}
 
 	/**
@@ -146,34 +146,38 @@ class Fundify_Admin_Settings
 	function fundify_field_pill_cb($args)
 	{
 		// Get the value of the setting we've registered with register_setting()
-		$options = get_option('fundify_options');
+		$options = get_option($this->options_key);
 	?>
-		<select id="<?php echo esc_attr($args['label_for']); ?>" data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>" name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
-			<option value="red" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
-				<?php esc_html_e('red pill', 'fundify'); ?>
-			</option>
-			<option value="blue" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
-				<?php esc_html_e('blue pill', 'fundify'); ?>
-			</option>
-		</select>
-		<p class="description">
-			<?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
-		</p>
-		<p class="description">
-			<?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
-		</p>
-	<?php
+<select id="<?php echo esc_attr($args['label_for']); ?>"
+    data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>"
+    name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
+    <option value="red"
+        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
+        <?php esc_html_e('red pill', 'fundify'); ?>
+    </option>
+    <option value="blue"
+        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
+        <?php esc_html_e('blue pill', 'fundify'); ?>
+    </option>
+</select>
+<p class="description">
+    <?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
+</p>
+<p class="description">
+    <?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
+</p>
+<?php
 	}
 
 	/**
 	 * Add the top level menu page.
 	 */
-	function fundify_options_page()
+	function fundify_main_page()
 	{
 
 
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-		add_menu_page($this->fundify, 'Fundify', 'manage_options', $this->fundify, array($this, 'fundify_options_page_html'), 'dashicons-chart-area', 26);
+		add_menu_page($this->fundify, 'Fundify', 'manage_options', $this->fundify, array($this, 'fundify_main_page_html'), 'dashicons-chart-area', 26);
 
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 		add_submenu_page($this->fundify, 'Fundify Settings', 'Settings', 'manage_options', $this->fundify . '-settings', array($this, 'fundify_admin_tabs'));
@@ -181,7 +185,7 @@ class Fundify_Admin_Settings
 
 
 	/**
-	 * Register our fundify_options_page to the admin_menu action hook.
+	 * Register our fundify_main_page to the admin_menu action hook.
 	 */
 
 
@@ -189,7 +193,7 @@ class Fundify_Admin_Settings
 	/**
 	 * Top level menu callback function
 	 */
-	function fundify_options_page_html()
+	function fundify_main_page_html()
 	{
 		// check user capabilities
 		if (!current_user_can('manage_options')) {
@@ -208,10 +212,10 @@ class Fundify_Admin_Settings
 		// show error/update messages
 		settings_errors('fundify_messages');
 	?>
-		<div class="wrap">
-			<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-			<form action="options.php" method="post">
-				<?php
+<div class="wrap">
+    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+    <form action="options.php" method="post">
+        <?php
 				// output security fields for the registered setting "fundify"
 				settings_fields('fundify');
 				// output setting sections and their fields
@@ -220,8 +224,8 @@ class Fundify_Admin_Settings
 				// output save settings button
 				submit_button('Save Settings');
 				?>
-			</form>
-		</div>
+    </form>
+</div>
 <?php
 	}
 
