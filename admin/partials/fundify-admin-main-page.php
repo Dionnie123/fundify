@@ -17,7 +17,7 @@ if (isset($_GET['settings-updated'])) {
 settings_errors('fundify_messages');
 ?>
 <div class="wrap">
-    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+    <h1><?php echo ucwords(strtolower(esc_html(get_admin_page_title()))); ?></h1>
     <form action="options.php" method="post">
         <?php
         // output security fields for the registered setting "fundify"
