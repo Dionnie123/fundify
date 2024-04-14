@@ -1,0 +1,13 @@
+@import "./base/normalize";
+@import "./base/body";
+@import "./base/print";
+@import "./base/wp";
+@import "./base/helpers";
+
+@import "./global/layout";
+@import "./global/colours";
+@import "./global/typography";
+
+$fa-font-path: "../fonts/fontawesome6-webfonts/";
+@import "./fontawesome6/fontawesome.scss";
+@import "./fontawesome6/solid.scss";

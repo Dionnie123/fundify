@@ -1,0 +1,23 @@
+@use "sass:color";
+
+$primary: teal;
+$secondary: color.adjust($primary, $lightness: -15%);
+$danger: #dc3545;
+$success: yellowgreen;
+$info: blue;
+$warning: orange;
+$light: #f8f9fa;
+$dark: #343a40;
+
+$pagination-active-bg: $primary;
+
+$theme-colors: (
+  primary: $primary,
+  secondary: $secondary,
+  success: $success,
+  info: $info,
+  warning: $warning,
+  danger: $danger,
+  light: $light,
+  dark: $dark,
+);
