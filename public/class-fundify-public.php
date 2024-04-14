@@ -20,7 +20,8 @@
  * @subpackage Fundify/public
  * @author     Mark Dionnie <dionnie_bulingit@yahoo.com>
  */
-class Fundify_Public {
+class Fundify_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Fundify_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Fundify_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,8 +75,7 @@ class Fundify_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/fundify-public.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/fundify-public.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Fundify_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -96,8 +98,60 @@ class Fundify_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/fundify-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/fundify-public.js', array('jquery'), $this->version, false);
 	}
 
+
+	/**
+	 * The [wporg] shortcode.
+	 *
+	 * Accepts a title and will display a box.
+	 *
+	 * @param array  $atts    Shortcode attributes. Default empty.
+	 * @param string $content Shortcode content. Default null.
+	 * @param string $tag     Shortcode tag (name). Default empty.
+	 * @return string Shortcode output.
+	 */
+	function wporg_shortcode($atts = [], $content = null, $tag = '')
+	{
+		// normalize attribute keys, lowercase
+		$atts = array_change_key_case((array) $atts, CASE_LOWER);
+
+		// override default attributes with user attributes
+		$wporg_atts = shortcode_atts(
+			array(
+				'title' => 'WordPress.org',
+			),
+			$atts,
+			$tag
+		);
+
+		// start box
+		$o = '<div class="wporg-box">';
+
+		// title
+		$o .= '<h2>' . esc_html($wporg_atts['title']) . '</h2>';
+
+		// enclosing tags
+		if (!is_null($content)) {
+			// $content here holds everything in between the opening and the closing tags of your shortcode. eg.g [my-shortcode]content[/my-shortcode].
+			// Depending on what your shortcode supports, you will parse and append the content to your output in different ways.
+			// In this example, we just secure output by executing the_content filter hook on $content.
+			$o .= apply_filters('the_content', $content);
+		}
+
+		// end box
+		$o .= '</div>';
+
+		// return output
+		return $o;
+	}
+
+	/**
+	 * Central location to create all shortcodes.
+	 */
+	function wporg_shortcodes_init()
+	{
+		add_shortcode('wporg', array($this, 'wporg_shortcode'));
+	}
 }

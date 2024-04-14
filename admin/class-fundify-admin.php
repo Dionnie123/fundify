@@ -81,11 +81,11 @@ class Fundify_Admin
 
 
 
-		wp_enqueue_style($this->fundify . '-admin',  plugin_dir_url(__DIR__) . 'admin/css/fundify-admin.css', array(), $ver, 'all', 2);
-		wp_enqueue_style($this->fundify . '-adminx',  plugin_dir_url(__DIR__) . 'dist/assets/css/admin.css ', array(), $ver, 'all', 2);
 
-		wp_enqueue_style('bsx3xx', 'https://raw.githubusercontent.com/elad2412/the-new-css-reset/main/css/reset.css', array(), $ver, 'all');
-		wp_enqueue_style('bsx3x', 'https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css', array(), $ver, 'all');
+		wp_enqueue_style($this->fundify . '-admin-dist', plugin_dir_url(__DIR__) . 'dist/assets/css/admin.css', array(), $ver, 'all', 2);
+
+		wp_enqueue_style($this->fundify . '-reset', 'https://raw.githubusercontent.com/elad2412/the-new-css-reset/main/css/reset.css', array(), $ver, 'all');
+		wp_enqueue_style($this->fundify . '-bootstrap', 'https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css', array(), $ver, 'all');
 	}
 
 	/**
@@ -111,9 +111,9 @@ class Fundify_Admin
 		 * class.
 		 */
 
-		wp_enqueue_script($this->fundify . 'fdf', plugin_dir_url(__FILE__) . 'js/fundify-admin.js', array('jquery'), $this->version, false);
-
-		wp_enqueue_script('bsx3x', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', array('jquery'), $this->version, true);
+		wp_enqueue_script($this->fundify . 'admin', plugin_dir_url(__FILE__) . 'js/fundify-admin.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->fundify . '-admin-dist', plugin_dir_url(__DIR__) . 'dist/assets/js/admin.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->fundify . '-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js', array('jquery'), $this->version, true);
 	}
 
 	public function register_settings()

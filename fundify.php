@@ -17,16 +17,19 @@
  * Plugin URI:        https://https://fundify.vercel.app/
  * Description:       Whether you're running a nonprofit campaign, a personal fundraiser, or a creative project, Fundify offers customizable donation forms that seamlessly integrate with your WordPress site. With just a few clicks, you can set up compelling fundraising campaigns and start accepting donations from supporters around the world.
  * Version:           1.0.0
+ * Requires at least: 8.0
+ * Requires PHP:      8.0
  * Author:            Mark Dionnie
- * Author URI:        https://https://markdionniebulingit.vercel.app//
- * License:           GPL-2.0+
+ * Author URI:        https://https://markdionniebulingit.vercel.app/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       fundify
  * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if (!defined('WPINC')) {
 	die;
 }
 
@@ -35,14 +38,15 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'FUNDIFY_VERSION', '1.0.0' );
+define('FUNDIFY_VERSION', '1.0.0');
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-fundify-activator.php
  */
-function activate_fundify() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-fundify-activator.php';
+function activate_fundify()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-fundify-activator.php';
 	Fundify_Activator::activate();
 }
 
@@ -50,19 +54,20 @@ function activate_fundify() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-fundify-deactivator.php
  */
-function deactivate_fundify() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-fundify-deactivator.php';
+function deactivate_fundify()
+{
+	require_once plugin_dir_path(__FILE__) . 'includes/class-fundify-deactivator.php';
 	Fundify_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_fundify' );
-register_deactivation_hook( __FILE__, 'deactivate_fundify' );
+register_activation_hook(__FILE__, 'activate_fundify');
+register_deactivation_hook(__FILE__, 'deactivate_fundify');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-fundify.php';
+require plugin_dir_path(__FILE__) . 'includes/class-fundify.php';
 
 /**
  * Begins execution of the plugin.
@@ -73,10 +78,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-fundify.php';
  *
  * @since    1.0.0
  */
-function run_fundify() {
+function run_fundify()
+{
 
 	$plugin = new Fundify();
 	$plugin->run();
-
 }
 run_fundify();

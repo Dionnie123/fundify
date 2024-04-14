@@ -118,6 +118,8 @@ class Fundify
 		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-fundify-admin.php';
 
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-fundify-admin-settings.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -155,13 +157,19 @@ class Fundify
 	{
 
 		$plugin_admin = new Fundify_Admin($this->get_plugin_name(), $this->get_version());
+		$plugin_admin_settings = new Fundify_Admin_Settings($this->get_plugin_name(), $this->get_version());
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-		$this->loader->add_action('admin_init', $plugin_admin, 'register_settings');
-		$this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
+		//$this->loader->add_action('admin_init', $plugin_admin, 'register_settings');
+		//$this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
 
 
-		$this->loader->add_action('admin_init', $plugin_admin, 'register_and_build_fields');
+		//$this->loader->add_action('admin_init', $plugin_admin, 'register_and_build_fields');
+
+
+		$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_settings_init');
+		$this->loader->add_action('admin_menu', $plugin_admin_settings, 'fundify_options_page');
+		//$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_options_page_html');
 	}
 
 	/**
@@ -178,6 +186,9 @@ class Fundify
 
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+
+		$this->loader->add_action('init', $plugin_public, 'wporg_shortcodes_init');
 	}
 
 	/**
