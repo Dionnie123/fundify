@@ -121,13 +121,13 @@ class Fundify_Admin
 		register_setting($this->options_key, $this->options_key);
 	}
 
-	public function addPluginAdminMenu()
+	public function add_plugin_admin_menu()
 	{
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-		add_menu_page($this->plugin_name, 'Fundify', 'administrator', $this->plugin_name, array($this, 'displayPluginAdminDashboard'), 'dashicons-chart-area', 26);
+		add_menu_page($this->plugin_name, 'Fundify', 'administrator', $this->plugin_name, array($this, 'display_plugin_admin_dashboard'), 'dashicons-chart-area', 26);
 
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
-		add_submenu_page($this->plugin_name, 'Fundify Settings', 'Settings', 'administrator', $this->plugin_name . '-settings', array($this, 'displayPluginAdminSettings'));
+		add_submenu_page($this->plugin_name, 'Fundify Settings', 'Settings', 'administrator', $this->plugin_name . '-settings', array($this, 'display_plugin_admin_settings'));
 	}
 
 
@@ -135,7 +135,7 @@ class Fundify_Admin
 
 
 
-	public function displayPluginAdminDashboard()
+	public function display_plugin_admin_dashboard()
 	{
 		// check user capabilities
 		if (!current_user_can('manage_options')) {
@@ -147,19 +147,21 @@ class Fundify_Admin
 		$tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 
 ?>
-		<!-- Our admin page content should all be inside .wrap -->
-		<div class="wrap">
-			<!-- Print the page title -->
-			<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-			<!-- Here are our tabs -->
-			<nav class="nav-tab-wrapper">
-				<a href="?page=fundify" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">General</a>
-				<a href="?page=fundify&tab=settings" class="nav-tab <?php if ($tab === 'settings') : ?>nav-tab-active<?php endif; ?>">Settings</a>
-				<a href="?page=fundify&tab=tools" class="nav-tab <?php if ($tab === 'tools') : ?>nav-tab-active<?php endif; ?>">Tools</a>
-			</nav>
+<!-- Our admin page content should all be inside .wrap -->
+<div class="wrap">
+    <!-- Print the page title -->
+    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+    <!-- Here are our tabs -->
+    <nav class="nav-tab-wrapper">
+        <a href="?page=fundify" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">General</a>
+        <a href="?page=fundify&tab=settings"
+            class="nav-tab <?php if ($tab === 'settings') : ?>nav-tab-active<?php endif; ?>">Settings</a>
+        <a href="?page=fundify&tab=tools"
+            class="nav-tab <?php if ($tab === 'tools') : ?>nav-tab-active<?php endif; ?>">Tools</a>
+    </nav>
 
-			<div class="tab-content">
-				<?php switch ($tab):
+    <div class="tab-content">
+        <?php switch ($tab):
 					case 'settings':
 						echo 'Settings'; //Put your HTML here
 						break;
@@ -170,23 +172,23 @@ class Fundify_Admin
 						echo 'Default tab';
 						break;
 				endswitch; ?>
-			</div>
-		</div>
+    </div>
+</div>
 <?php
 	}
 
-	public function displayPluginAdminSettings()
+	public function display_plugin_admin_settings()
 	{
 		// set this var to be used in the settings-display view
 		$active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'general';
 		if (isset($_GET['error_message'])) {
-			add_action('admin_notices', array($this, 'pluginNameSettingsMessages'));
+			add_action('admin_notices', array($this, 'plugin_name_settings_messages'));
 			do_action('admin_notices', $_GET['error_message']);
 		}
 		require_once 'partials/' . $this->plugin_name . '-admin-settings-display.php';
 	}
 
-	public function pluginNameSettingsMessages($error_message)
+	public function plugin_name_settings_messages($error_message)
 	{
 		switch ($error_message) {
 			case '1':
@@ -204,7 +206,7 @@ class Fundify_Admin
 		);
 	}
 
-	public function registerAndBuildFields()
+	public function register_and_build_fields()
 	{
 		/**
 		 * First, we add_settings_section. This is necessary since all future settings must belong to one.
