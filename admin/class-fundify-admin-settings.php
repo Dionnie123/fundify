@@ -88,7 +88,7 @@ class Fundify_Admin_Settings
 		// Register a new section in the "fundify" page.
 		add_settings_section(
 			'fundify_section_developers',
-			__('The Matrix has you.', 'fundify'),
+			'',	//__('The Matrix has you.', 'fundify'),
 			array($this, 'fundify_section_developers_callback'),
 			'fundify'
 		);

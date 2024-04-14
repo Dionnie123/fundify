@@ -13,11 +13,23 @@ if (isset($_GET['settings-updated'])) {
     add_settings_error('fundify_messages', 'fundify_message', __('Settings Saved', 'fundify'), 'updated');
 }
 
-// show error/update messages
-settings_errors('fundify_messages');
+
 ?>
+<div class="card bg-primary">
+    <h4 class="mb-0 text-white"><?php echo ucwords(strtolower(esc_html(get_admin_page_title()))); ?>
+        <?php echo $this->version ?></h4>
+</div>
 <div class="wrap">
-    <h1><?php echo ucwords(strtolower(esc_html(get_admin_page_title()))); ?></h1>
+
+
+
+    <?php
+    // show error/update messages
+    settings_errors('fundify_messages');
+    ?>
+
+
+
     <form action="options.php" method="post">
         <?php
         // output security fields for the registered setting "fundify"
