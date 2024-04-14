@@ -129,8 +129,8 @@ class Fundify_Admin_Settings
 	function fundify_section_developers_callback($args)
 	{
 ?>
-<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
-<?php
+		<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
+	<?php
 	}
 
 	/**
@@ -148,24 +148,20 @@ class Fundify_Admin_Settings
 		// Get the value of the setting we've registered with register_setting()
 		$options = get_option($this->options_key);
 	?>
-<select id="<?php echo esc_attr($args['label_for']); ?>"
-    data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>"
-    name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
-    <option value="red"
-        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
-        <?php esc_html_e('red pill', 'fundify'); ?>
-    </option>
-    <option value="blue"
-        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
-        <?php esc_html_e('blue pill', 'fundify'); ?>
-    </option>
-</select>
-<p class="description">
-    <?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
-</p>
-<p class="description">
-    <?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
-</p>
+		<select id="<?php echo esc_attr($args['label_for']); ?>" data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>" name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
+			<option value="red" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
+				<?php esc_html_e('red pill', 'fundify'); ?>
+			</option>
+			<option value="blue" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
+				<?php esc_html_e('blue pill', 'fundify'); ?>
+			</option>
+		</select>
+		<p class="description">
+			<?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
+		</p>
+		<p class="description">
+			<?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
+		</p>
 <?php
 	}
 
@@ -195,38 +191,7 @@ class Fundify_Admin_Settings
 	 */
 	function fundify_main_page_html()
 	{
-		// check user capabilities
-		if (!current_user_can('manage_options')) {
-			return;
-		}
-
-		// add error/update messages
-
-		// check if the user have submitted the settings
-		// WordPress will add the "settings-updated" $_GET parameter to the url
-		if (isset($_GET['settings-updated'])) {
-			// add settings saved message with the class of "updated"
-			add_settings_error('fundify_messages', 'fundify_message', __('Settings Saved', 'fundify'), 'updated');
-		}
-
-		// show error/update messages
-		settings_errors('fundify_messages');
-	?>
-<div class="wrap">
-    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-    <form action="options.php" method="post">
-        <?php
-				// output security fields for the registered setting "fundify"
-				settings_fields('fundify');
-				// output setting sections and their fields
-				// (sections are registered for "fundify", each field is registered to a specific section)
-				do_settings_sections('fundify');
-				// output save settings button
-				submit_button('Save Settings');
-				?>
-    </form>
-</div>
-<?php
+		require_once 'partials/' . $this->fundify . '-admin-main-page.php';
 	}
 
 	public function fundify_admin_tabs()

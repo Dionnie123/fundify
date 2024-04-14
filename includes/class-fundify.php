@@ -160,16 +160,11 @@ class Fundify
 		$plugin_admin_settings = new Fundify_Admin_Settings($this->get_plugin_name(), $this->get_version());
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-		//$this->loader->add_action('admin_init', $plugin_admin, 'register_settings');
-		//$this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_admin_menu');
 
-
-		//$this->loader->add_action('admin_init', $plugin_admin, 'register_and_build_fields');
 
 
 		$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_settings_init');
 		$this->loader->add_action('admin_menu', $plugin_admin_settings, 'fundify_main_page');
-		//$this->loader->add_action('admin_init', $plugin_admin_settings, 'fundify_options_page_html');
 	}
 
 	/**
