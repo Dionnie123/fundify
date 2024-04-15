@@ -120,6 +120,8 @@ class Fundify
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-fundify-admin-settings.php';
 
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-fundify-donation-post-type.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -158,6 +160,7 @@ class Fundify
 
 		$plugin_admin = new Fundify_Admin($this->get_plugin_name(), $this->get_version());
 		$plugin_admin_settings = new Fundify_Admin_Settings($this->get_plugin_name(), $this->get_version());
+		$plugin_admin_donation_post_type = new Fundify_Donation_Post_Type();
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 

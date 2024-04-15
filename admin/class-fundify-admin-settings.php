@@ -129,8 +129,8 @@ class Fundify_Admin_Settings
 	function fundify_section_developers_callback($args)
 	{
 ?>
-		<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
-	<?php
+<p id="<?php echo esc_attr($args['id']); ?>"><?php esc_html_e('Follow the white rabbit.', 'fundify'); ?></p>
+<?php
 	}
 
 	/**
@@ -148,20 +148,24 @@ class Fundify_Admin_Settings
 		// Get the value of the setting we've registered with register_setting()
 		$options = get_option($this->options_key);
 	?>
-		<select id="<?php echo esc_attr($args['label_for']); ?>" data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>" name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
-			<option value="red" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
-				<?php esc_html_e('red pill', 'fundify'); ?>
-			</option>
-			<option value="blue" <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
-				<?php esc_html_e('blue pill', 'fundify'); ?>
-			</option>
-		</select>
-		<p class="description">
-			<?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
-		</p>
-		<p class="description">
-			<?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
-		</p>
+<select id="<?php echo esc_attr($args['label_for']); ?>"
+    data-custom="<?php echo esc_attr($args['fundify_custom_data']); ?>"
+    name="fundify_options[<?php echo esc_attr($args['label_for']); ?>]">
+    <option value="red"
+        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'red', false)) : (''); ?>>
+        <?php esc_html_e('red pill', 'fundify'); ?>
+    </option>
+    <option value="blue"
+        <?php echo isset($options[$args['label_for']]) ? (selected($options[$args['label_for']], 'blue', false)) : (''); ?>>
+        <?php esc_html_e('blue pill', 'fundify'); ?>
+    </option>
+</select>
+<p class="description">
+    <?php esc_html_e('You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'fundify'); ?>
+</p>
+<p class="description">
+    <?php esc_html_e('You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'fundify'); ?>
+</p>
 <?php
 	}
 
@@ -174,6 +178,17 @@ class Fundify_Admin_Settings
 
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 		add_menu_page($this->fundify, 'Fundify', 'manage_options', $this->fundify, array($this, 'fundify_main_page_html'), 'dashicons-chart-area', 26);
+
+
+		add_submenu_page(
+			$this->fundify,
+			'Donations',
+			'Donations',
+			'manage_options',
+			'edit.php?post_type=fundify_donations'
+		);
+
+		
 
 		//add_submenu_page( '$parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 		add_submenu_page($this->fundify, 'Fundify Settings', 'Settings', 'manage_options', $this->fundify . '-settings', array($this, 'fundify_admin_tabs'));
